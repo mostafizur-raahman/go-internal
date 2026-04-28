@@ -1,5 +1,5 @@
 #include <stdio.h>
-#ifdef DEBUGG
+#ifdef DEBUG
 #define DEBUG_LOG(fmt, ...) \
     do { \
         fprintf(stderr, "[%s:%d] " fmt "\n", __FILE__, __LINE__, ##__VA_ARGS__); \
@@ -20,4 +20,10 @@ int main(void){
     printf("application started....\n");
     process_data();
     DEBUG_LOG("Application finished successfully.\n");
+
+    #if defined(__linux__)
+        printf("Linux-specific: Using /proc filesystem\n");
+    #elif defined(__APPLE__)
+        printf("macOS-specific: Using sysctl\n");
+    #endif
 }
